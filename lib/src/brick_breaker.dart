@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math' as math;
 
+import 'package:brick_breaker/audio/audio_pengontrol.dart';
 import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
@@ -23,8 +24,9 @@ class BrickBreaker extends FlameGame
           ),
         );
 
-  final ValueNotifier<int> score = ValueNotifier(0);            // Add this line
+  final ValueNotifier<int> score = ValueNotifier(0); // Add this line
   final rand = math.Random();
+  final audioController = AudioController();
   double get width => size.x;
   double get height => size.y;
 
@@ -63,7 +65,7 @@ class BrickBreaker extends FlameGame
     world.removeAll(world.children.query<Brick>());
 
     playState = PlayState.playing;
-    score.value = 0;                                            // Add this line
+    score.value = 0; // Add this line
 
     world.add(Ball(
         difficultyModifier: difficultyModifier,
@@ -89,6 +91,11 @@ class BrickBreaker extends FlameGame
             color: brickColors[i],
           ),
     ]);
+  }
+
+  void reset() {
+    removeAll(children);
+    Future.delayed(const Duration(seconds: 1), () => startGame());
   }
 
   @override

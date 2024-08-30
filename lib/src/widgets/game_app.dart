@@ -1,27 +1,33 @@
+import 'package:brick_breaker/audio/audio_pengontrol.dart';
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../brick_breaker.dart';
 import '../config.dart';
-import 'overlay_screen.dart';                                   // Add this import
-import 'score_card.dart';                                       // And this one too
+import 'overlay_screen.dart'; // Add this import
+import 'score_card.dart'; // And this one too
 
-class GameApp extends StatefulWidget {                          // Modify this line
+class GameApp extends StatefulWidget {
+  // Modify this line
   const GameApp({super.key});
 
-  @override                                                     // Add from here...
+  @override // Add from here...
   State<GameApp> createState() => _GameAppState();
 }
 
 class _GameAppState extends State<GameApp> {
   late final BrickBreaker game;
+  final audioController = AudioController();
 
   @override
   void initState() {
     super.initState();
-    game = BrickBreaker();
-  }                                                             // To here.
+    game = BrickBreaker(); 
+    audioController.initialize();
+    audioController.startMusic();
+   
+  } // To here.
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,8 @@ class _GameAppState extends State<GameApp> {
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Center(
-                child: Column(                                  // Modify from here...
+                child: Column(
+                  // Modify from here...
                   children: [
                     ScoreCard(score: game.score),
                     Expanded(
@@ -82,7 +89,7 @@ class _GameAppState extends State<GameApp> {
                       ),
                     ),
                   ],
-                ),                                              // To here.
+                ), // To here.
               ),
             ),
           ),
